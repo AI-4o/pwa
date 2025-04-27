@@ -1,12 +1,22 @@
 'use server'
 
+import { Pool } from "pg";
 import webpush from 'web-push'
 
-webpush.setVapidDetails(
+webpush.setVapidDetails(// initualize web-push with the vapid keys
   'mailto:ai@aisoft.sh',
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
   process.env.VAPID_PRIVATE_KEY!
 )
+
+
+const pool = new Pool({
+  connectionString: process.env.POSTGRESS_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
 
 // We no longer need to store the subscription here
 // Let the client store it and pass it when needed
