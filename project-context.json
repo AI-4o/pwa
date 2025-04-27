@@ -1,0 +1,109 @@
+{
+  "project": {
+    "name": "Next.js PWA",
+    "description": "A Progressive Web Application built with Next.js, featuring push notifications and installable capabilities.",
+    "type": "frontend",
+    "architecture": "React-based Next.js application with PWA features"
+  },
+  "tech_stack": {
+    "framework": {
+      "name": "Next.js",
+      "version": "15.3.1",
+      "features_used": ["App Router", "Server Actions", "Metadata API"]
+    },
+    "pwa": {
+      "plugin": "next-pwa",
+      "version": "^5.6.0",
+      "features": ["Service Worker", "Web Push Notifications", "Installable"]
+    },
+    "react": {
+      "version": "^19.0.0",
+      "patterns": ["Client Components", "Server Components"]
+    },
+    "styling": {
+      "system": "TailwindCSS",
+      "version": "^4"
+    },
+    "language": "TypeScript"
+  },
+  "codebase_structure": {
+    "root_files": {
+      "configuration": ["next.config.mjs", "package.json", "tsconfig.json", "postcss.config.mjs"],
+      "documentation": ["README.md"]
+    },
+    "directories": {
+      "source": "src/",
+      "public_assets": "public/",
+      "build_output": ".next/"
+    },
+    "application_code": {
+      "entry_point": "src/app/layout.tsx",
+      "main_page": "src/app/page.tsx",
+      "server_actions": "src/app/actions.ts",
+      "pwa_manifest": "src/app/manifest.ts",
+      "styling": "src/app/globals.css"
+    }
+  },
+  "key_features": {
+    "pwa_capabilities": {
+      "offline_support": {
+        "implementation": "Service Worker (sw.js)",
+        "caching_strategy": "Workbox-based caching of static assets and API responses"
+      },
+      "installability": {
+        "manifest": "Generated from src/app/manifest.ts",
+        "install_prompt": "Custom InstallPrompt component in page.tsx"
+      },
+      "push_notifications": {
+        "implementation": "web-push library",
+        "components": "PushNotificationManager in page.tsx",
+        "server_actions": "subscribeUser, unsubscribeUser, sendNotification in actions.ts",
+        "requirements": "VAPID keys for Web Push API"
+      }
+    }
+  },
+  "implementation_details": {
+    "service_worker": {
+      "registration": "Client-side registration in page.tsx",
+      "location": "public/sw.js",
+      "generated_by": "next-pwa plugin",
+      "features": ["Precaching", "Runtime caching", "Offline support", "Push event handling"]
+    },
+    "push_notifications": {
+      "subscription_flow": "User clicks subscribe -> Browser permission -> PushManager.subscribe -> Server stores subscription",
+      "sending_flow": "Server action sendNotification -> web-push.sendNotification -> Service Worker receives push event -> Shows notification",
+      "security": "VAPID keys for server authentication"
+    },
+    "app_installation": {
+      "detection": "window.matchMedia('(display-mode: standalone)').matches",
+      "custom_prompts": "Different prompts for iOS vs other platforms"
+    }
+  },
+  "development_patterns": {
+    "server_actions": "Used for subscription management and sending notifications",
+    "client_components": "Used for interactive features requiring browser APIs",
+    "environment_variables": {
+      "required": [
+        "NEXT_PUBLIC_VAPID_PUBLIC_KEY",
+        "VAPID_PRIVATE_KEY"
+      ]
+    }
+  },
+  "architecture_decisions": {
+    "pwa_configuration": "Using next-pwa plugin with custom service worker configuration",
+    "notification_handling": "Server-side generation with client-side display",
+    "state_management": "React useState for local component state",
+    "deployment_considerations": "Requires HTTPS for service worker and push notifications"
+  },
+  "common_tasks": {
+    "development": "npm run dev",
+    "build": "npm run build",
+    "deployment": "Build and deploy to a platform supporting HTTPS"
+  },
+  "potential_improvements": {
+    "database_integration": "Replace in-memory subscription storage with persistent database",
+    "ui_enhancements": "Improve notification UI and installation prompts",
+    "offline_experience": "Add more sophisticated offline functionality",
+    "background_sync": "Implement background sync for offline actions"
+  }
+} 
